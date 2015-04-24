@@ -94,7 +94,7 @@ router.route('/bears/:descr/:endt/:stdt/:vhid')
 app.use('/api', router);
 app.use(express.static('public'));
 
-app.listen(port);
+app.listen(80);
 console.log('Magic happens on port ' + port);
 
 // var server = app.listen(3000, function () {
