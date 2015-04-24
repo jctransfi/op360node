@@ -93,8 +93,8 @@ myApp.controller('paController', function($scope, dataService, uiGridConstants) 
 
   	$scope.update = function (cpe){
   		console.log("beep")
-  		var updateQ = {"vhid": $scope.cpe.vhid, "descr":  $scope.cpe.device + "" + $scope.cpe.desc1 + "/" + $scope.cpe.desc2 + "/" + $scope.cpe.desc3,
-  		"stdt":  $scope.cpe.stdt + " " + $scope.cpe.sttm, "endt":  $scope.cpe.enddt + " " + $scope.cpe.endtm }
+  		var updateQ = {"vhid": $scope.cpe.vhid, "descr":  $scope.cpe.device + "" + $scope.cpe.desc1 + "%2F" + $scope.cpe.desc2 + "%2F" + $scope.cpe.desc3,
+  		"stdt":  $scope.cpe.stdt + "+" + $scope.cpe.sttm, "endt":  $scope.cpe.enddt + "+" + $scope.cpe.endtm }
 
   		console.log(updateQ);
 
