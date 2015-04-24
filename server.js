@@ -28,7 +28,7 @@
 var express = require('express');
 var app = express();
 
-var port     = process.env.PORT || 8080; // set our port
+var port     = process.env.PORT || 80; // set our port
 
 // create our router
 var router = express.Router();
@@ -94,7 +94,7 @@ router.route('/bears/:descr/:endt/:stdt/:vhid')
 app.use('/api', router);
 app.use(express.static('public'));
 
-app.listen(80);
+app.listen(port);
 console.log('Magic happens on port ' + port);
 
 // var server = app.listen(3000, function () {
