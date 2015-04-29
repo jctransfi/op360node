@@ -34,7 +34,7 @@ myApp.service('dataService', function($http) {
         console.log(urlpath);
 	    return $http({
 	        method: 'GET',
-	        url: urlpath,
+	        url: urlpath
 	     });
 	}
 });
@@ -69,7 +69,7 @@ myApp.controller('paController', function($scope, dataService, uiGridConstants) 
   		enableFiltering: true,
         exporterMenuCsv: true,
         exporterMenuPdf: false,
-        exporterCsvFilename: 'myFile.csv',
+        exporterCsvFilename: $scope.cpe.stdt + ' to ' + $scope.cpe.enddt + '.csv',
     	// showColumnFooter: true,
   		enablePaginationControls: false,
   		enableColumnMenus: false,
@@ -85,7 +85,8 @@ myApp.controller('paController', function($scope, dataService, uiGridConstants) 
 			{displayName:'CSSs', field: 'css', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
 			{displayName:'BESs', field: 'bes', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
 			{displayName:'DMs', field: 'dm', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
-			{displayName:'LESs', field: 'les', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true}
+			{displayName:'LESs', field: 'les', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
+            {displayName:'LCV', field: 'lcv', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true}
 			/*{displayName:'LOS', field: 'alarmlos', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
 			{displayName:'LOF', field: 'alarmlof', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
 			{displayName:'REM', field: 'alarmrem', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
@@ -151,11 +152,12 @@ function dataSummary(stats){
 	var arr_lof = [];
 	var arr_rem = [];
 	var arr_ais = [];
+    var arr_lcv = [];
 
 	var totals_obj = {
     	"es": {
     		"count": 0,
-    		"instances": ""
+    		"instances": []
     	},
     	"uas": {
     		"count": 0,
@@ -189,29 +191,33 @@ function dataSummary(stats){
     		"count": 0,
     		"instances": []
     	},
-    	// "los": {
-    	// 	"count": 0,
-    	// 	"instances": []
-    	// },
-    	// "lof": {
-    	// 	"count": 0,
-    	// 	"instances": []
-    	// },
-    	// "rem": {
-    	// 	"count": 0,
-    	// 	"instances": []
-    	// },
-    	// "ais": {
-    	// 	"count": 0,
-    	// 	"instances": ""
-    	// },
+        "lcv": {
+            "count": 0,
+            "instances": []
+        },
+    	"los": {
+    		"count": 0,
+    		"instances": []
+    	},
+    	"lof": {
+    		"count": 0,
+    		"instances": []
+    	},
+    	"rem": {
+    		"count": 0,
+    		"instances": []
+    	},
+    	"ais": {
+    		"count": 0,
+    		"instances": []
+    	},
     	"total_err": 0
     }
 
 	for(i=0; i != stats.length; i++){
 		// console.log(stats[i].enddt)
 		if(parseInt(stats[i].es) !== 0){
-			totals_obj.es.instances += (stats[i].enddt + "<br/>")
+			totals_obj.es.instances.push(stats[i].enddt)
 		}
 
 		if(parseInt(stats[i].uas) !== 0){
@@ -246,21 +252,23 @@ function dataSummary(stats){
 			totals_obj.les.instances.push(stats[i].enddt)
 		}
 
-		// if(parseInt(stats[i].alarmlos) !== 0){
-		// 	totals_obj.los.instances.push(stats[i].enddt)
-		// }
+        totals_obj.lcv.instances.push(stats[i].endt)
 
-		// if(parseInt(stats[i].alarmlof) !== 0){
-		// 	totals_obj.lof.instances.push(stats[i].enddt)
-		// }
+		if(parseInt(stats[i].alarmlos) !== 0){
+			totals_obj.los.instances.push(stats[i].enddt)
+		}
 
-		// if(parseInt(stats[i].alarmrem) !== 0){
-		// 	totals_obj.rem.instances.push(stats[i].enddt)
-		// }
+		if(parseInt(stats[i].alarmlof) !== 0){
+			totals_obj.lof.instances.push(stats[i].enddt)
+		}
 
-		// if(parseInt(stats[i].alarmais) !== 0){
-		// 	totals_obj.ais.instances += ("<a href='#'>" +stats[i].enddt + "</a><br/>")
-		// }
+		if(parseInt(stats[i].alarmrem) !== 0){
+			totals_obj.rem.instances.push(stats[i].enddt)
+		}
+
+		if(parseInt(stats[i].alarmais) !== 0){
+			totals_obj.ais.instances.push(stats[i].enddt)
+		}
 
         arr_es.push(parseInt(stats[i].es));
         arr_uas.push(parseInt(stats[i].uas));
@@ -271,32 +279,37 @@ function dataSummary(stats){
         arr_bes.push(parseInt(stats[i].bes));
         arr_dm.push(parseInt(stats[i].dm));
         arr_les.push(parseInt(stats[i].les));
-        // arr_los.push(parseInt(stats[i].alarmlos));
-        // arr_lof.push(parseInt(stats[i].alarmlof));
-        // arr_rem.push(parseInt(stats[i].alarmrem));
-        // arr_ais.push(parseInt(stats[i].alarmais));
+        arr_lcv.push(0);
+        arr_los.push(parseInt(stats[i].alarmlos));
+        arr_lof.push(parseInt(stats[i].alarmlof));
+        arr_rem.push(parseInt(stats[i].alarmrem));
+        arr_ais.push(parseInt(stats[i].alarmais));
     }
 
-	totals_obj.es.count = totalArray(arr_es),
-	totals_obj.uas.count = totalArray(arr_uas),
-	totals_obj.pcv.count = totalArray(arr_pcv),
-	totals_obj.ses.count = totalArray(arr_ses),
-	totals_obj.sef.count = totalArray(arr_sef),
-	totals_obj.css.count = totalArray(arr_css),
-	totals_obj.bes.count = totalArray(arr_bes),
-	totals_obj.dm.count = totalArray(arr_dm),
-	totals_obj.les.count = totalArray(arr_les)
-	// totals_obj.los.count = totalArray(arr_los),
-	// totals_obj.lof.count = totalArray(arr_lof),
-	// totals_obj.rem.count = totalArray(arr_rem),
-	// totals_obj.ais.count = totalArray(arr_ais)
+	totals_obj.es.count = totalArray(arr_es);
+	totals_obj.uas.count = totalArray(arr_uas);
+	totals_obj.pcv.count = totalArray(arr_pcv);
+	totals_obj.ses.count = totalArray(arr_ses);
+	totals_obj.sef.count = totalArray(arr_sef);
+	totals_obj.css.count = totalArray(arr_css);
+	totals_obj.bes.count = totalArray(arr_bes);
+	totals_obj.dm.count = totalArray(arr_dm);
+	totals_obj.les.count = totalArray(arr_les);
+    totals_obj.lcv.count = totalArray(arr_lcv);
+	totals_obj.los.count = totalArray(arr_los);
+	totals_obj.lof.count = totalArray(arr_lof);
+	totals_obj.rem.count = totalArray(arr_rem);
+	totals_obj.ais.count = totalArray(arr_ais);
 
 	var err_total = 0;
 
 	$.each( totals_obj, function( key, value ) {
-		if(key !== 'total_err'){
-			err_total += this.count;
-		}
+		if(key === 'total_err' || key === 'los' || key === 'lof' || key === 'rem' || key === 'ais'){
+            //no op
+		}else {
+            err_total += this.count;
+            console.log(key + ":" + this.count)
+        }
 		console.log(err_total)
 	});
 

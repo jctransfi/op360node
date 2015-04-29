@@ -297,6 +297,7 @@ body {
 
 .data-summary {
     width: 28%;
+    margin-bottom: 12px;
     float: right;
 }
 

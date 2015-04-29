@@ -88,7 +88,9 @@
                         </tr>
                         <tr>
                             <td>BES</td>
-                            <td colspan="4"><span tooltip="{{totals.bes.instances}}" tooltip-placement="bottom" >{{totals.bes.count}}</span></td>
+                            <td><span tooltip="{{totals.bes.instances}}" tooltip-placement="bottom" >{{totals.bes.count}}</span></td>
+                            <td>LCV</td>
+                            <td><span tooltip="{{totals.lcv.instances}}" tooltip-placement="bottom" >{{totals.lcv.count}}</span></td>
                         </tr>
                         <!--<tr>
                             <td>REM</td>
@@ -102,5 +104,26 @@
 
                     </table>
                 </div>
+
+                <div class="data-summary">
+                    <table>
+                        <tr class="data-summary__header">
+                            <td colspan="5">Alarm Summary</td>
+                        </tr>
+                        <tr>
+                            <td>LOS</td>
+                            <td><span tooltip-html-unsafe="{{totals.es.instances}}" tooltip-placement="bottom">{{totals.los.count}}</span></td>
+                            <td>LOF</td>
+                            <td><span tooltip="{{totals.uas.instances}}" tooltip-placement="bottom">{{totals.lof.count}}</span></td>
+                        </tr>
+                        <tr>
+                            <td>REM</td>
+                            <td><span tooltip="{{totals.uas.instances}}" tooltip-placement="bottom">{{totals.rem.count}}</span></td>
+                            <td>AIS</td>
+                            <td><span tooltip="{{totals.les.instances}}" tooltip-placement="bottom">{{totals.ais.count}}</span></td>
+                        </tr>
+                    </table>
+                </div>
+
                 <div class="clear"></div>
 </div>
