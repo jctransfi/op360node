@@ -28,7 +28,8 @@
 var express = require('express');
 var app = express();
 
-var port = process.env.PORT || 80; // set our port
+var port = process.env.PORT || 8090; // dev port
+//var port = process.env.PORT || 80; // set our port
 
 // create our router
 var router = express.Router();
@@ -82,8 +83,8 @@ router.route('/bears/:descr/:endt/:stdt/:vhid')
 
       //the whole response has been recieved, so we just print it out here
       response.on('end', function () {
-        console.log(options);
         var parsed = JSON.parse(str)
+        console.log(str);
         res.json(parsed);
       });
     }

@@ -1,4 +1,4 @@
-var myApp = angular.module('myApp',['ui.grid', 'ui.grid.pagination', 'cgBusy', 'ui.bootstrap', 'ngRoute']);
+var myApp = angular.module('myApp',['ui.grid', 'ui.grid.pagination', 'cgBusy', 'ui.bootstrap', 'ngRoute', 'ui.grid.exporter']);
 
 myApp.config(function($routeProvider) {
     $routeProvider
@@ -48,7 +48,7 @@ myApp.controller('contactController', function($scope) {
 });
 
 myApp.controller('paController', function($scope, dataService, uiGridConstants) {
-	var defQ = {"vhid":"CABRCV1-CROCS-RTR-1", "descr":"Serial0%2F0%2F0", "stdt":"2015-01-01+00:00:00", "endt":"2015-01-03+00:00:00"};
+	var defQ = {"vhid":"CABRCV1-CROCS-RTR-1", "descr":"Serial0%2F0%2F0", "stdt":"2015-01-01+00:00:00", "endt":"2015-01-01+23:59:00"};
 
 	$scope.master = {vhid:"CABRCV1-CROCS-RTR-1", device: "Serial", desc1: "0", desc2:"0", desc3: "0", stdt: "2015-01-01", sttm: "00:00:00", enddt: "2015-01-01", endtm: "01:00:00"};
 	$scope.cpe = angular.copy($scope.master);
@@ -62,8 +62,14 @@ myApp.controller('paController', function($scope, dataService, uiGridConstants) 
   	$scope.totals = {};
 
   	$scope.gridOptions = {
+        enableGridMenu: true,
   		showGridFooter: true,
+        // footerTemplate: 'ui-grid/ui-footer-template-custom.html',
+        // gridFooterTemplate: 'ui-grid/ui-footer-template-custom.html',
   		enableFiltering: true,
+        exporterMenuCsv: true,
+        exporterMenuPdf: false,
+        exporterCsvFilename: 'myFile.csv',
     	// showColumnFooter: true,
   		enablePaginationControls: false,
   		enableColumnMenus: false,
