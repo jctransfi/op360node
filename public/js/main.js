@@ -121,19 +121,19 @@ myApp.controller('paController', function($scope, dataService, uiGridConstants) 
 	    });
   	}
 
-    $scope.promise = dataService.getData(defQ).then(function(dataResponse) {
-    	if(dataResponse.data._embedded){
-    		$scope.stats = dataResponse.data._embedded.stats;
-	        $scope.gridOptions.data = dataResponse.data._embedded.stats;
-	        dataMassage(dataResponse.data._embedded.stats);
-	        $scope.totals = dataSummary(dataResponse.data._embedded.stats);
-	        // console.log(totals);
-    	}else {
-    		console.log("NO DATA");
-    		// $scope.gridOptions = {};
-    		// $scope.gridOptions.data = {};
-    	}
-    });
+    // $scope.promise = dataService.getData(defQ).then(function(dataResponse) {
+    // 	if(dataResponse.data._embedded){
+    // 		$scope.stats = dataResponse.data._embedded.stats;
+	   //      $scope.gridOptions.data = dataResponse.data._embedded.stats;
+	   //      dataMassage(dataResponse.data._embedded.stats);
+	   //      $scope.totals = dataSummary(dataResponse.data._embedded.stats);
+	   //      // console.log(totals);
+    // 	}else {
+    // 		console.log("NO DATA");
+    // 		// $scope.gridOptions = {};
+    // 		// $scope.gridOptions.data = {};
+    // 	}
+    // });
 
 });
 
