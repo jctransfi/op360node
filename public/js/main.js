@@ -118,7 +118,9 @@ myApp.controller('paController', function($scope, dataService, uiGridConstants) 
   			}else{
   				console.log("NO DATA");	
   				//$scope.gridOptions = {};
-  				//$scope.gridOptions.data = {};
+                $scope.stats = {};
+  				$scope.gridOptions.data = {};
+                $("#line-chart").empty();
   			}
 	    });
   	}
