@@ -101,7 +101,7 @@ myApp.controller('paController', function($scope, dataService, uiGridConstants) 
   	$scope.update = function (cpe){
   		console.log("beep")
         var descRaw = $scope.cpe.desc;
-        var descSerial = descRaw.replace("/", "%2F");
+        var descSerial = descRaw.replace(/\//g, "%2F");
   		var updateQ = {"vhid": $scope.cpe.vhid, "descr":  $scope.cpe.device + "" + descSerial,
   		"stdt":  $scope.cpe.stdt + "+" + $scope.cpe.sttm, "endt":  $scope.cpe.enddt + "+" + $scope.cpe.endtm }
 
