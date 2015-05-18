@@ -113,7 +113,7 @@ myApp.controller('paController', function($scope, dataService, uiGridConstants) 
   				$scope.stats = dataResponse.data._embedded.stats;
 		        $scope.gridOptions.data = dataResponse.data._embedded.stats;
 		        // console.log(dataResponse.data._embedded.stats);
-		        dataMassage(dataResponse.data._embedded.stats);
+		        // dataMassage(dataResponse.data._embedded.stats);
 		        $scope.totals = dataSummary(dataResponse.data._embedded.stats);
   			}else{
   				console.log("NO DATA");	

@@ -319,6 +319,7 @@ body {
 
 .data-summary table td {
     padding: 5px;
+    /*border-right: 1px solid #16a085;*/
 }
 
 #grid1 {
