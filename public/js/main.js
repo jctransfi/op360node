@@ -337,6 +337,7 @@ function dataMassage(stats){
 	// var arr_ais = [];
 
 	// set steps
+    //TODO: change this to something more algorithmin
 	if(stats.length < 17){
 		steps = 1;
 	}else if(stats.length < 33){
@@ -347,8 +348,14 @@ function dataMassage(stats){
 		steps = 8;
 	}else if(stats.length < 257){
 		steps = 16;
-	}else if(stats.length > 256){
-		steps = 64;
+	}else if(stats.length < 513){
+        steps = 32;
+    }else if(stats.length < 1023){
+        steps = 64;
+    }else if(stats.length < 2049){
+        steps = 128;
+    }else if(stats.length > 2048){
+		steps = 256;
 	}
 
 	for(i=0; i != stats.length; i++){
