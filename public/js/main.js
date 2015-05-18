@@ -352,7 +352,7 @@ function dataMassage(stats){
 		steps = 16;
 	}else if(stats.length < 513){
         steps = 32;
-    }else if(stats.length < 1023){
+    }else if(stats.length < 1025){
         steps = 64;
     }else if(stats.length < 2049){
         steps = 128;
@@ -406,8 +406,17 @@ function dataMassage(stats){
 						}else if(resetStep < 257){
 							this.xAxis[0].options.labels.step = 16;
 							console.log("reset zoom");
-						}else if(resetStep > 256){
-							this.xAxis[0].options.labels.step = 64;
+						}else if(resetStep < 513){
+                            this.xAxis[0].options.labels.step = 32;
+                            console.log("reset zoom");
+                        }else if(resetStep < 1025){
+                            this.xAxis[0].options.labels.step = 64;
+                            console.log("reset zoom");
+                        }else if(resetStep < 2049){
+                            this.xAxis[0].options.labels.step = 128;
+                            console.log("reset zoom");
+                        }else if(resetStep > 2048){
+							this.xAxis[0].options.labels.step = 256;
 							console.log("reset zoom");
 						}
                 	}else {
@@ -424,8 +433,14 @@ function dataMassage(stats){
 							this.xAxis[0].options.labels.step = 8;
 						}else if(resetStep2 < 257){
 							this.xAxis[0].options.labels.step = 16;
-						}else if(resetStep2 > 256){
-							this.xAxis[0].options.labels.step = 64;
+						}else if(resetStep2 < 513){
+                            this.xAxis[0].options.labels.step = 32;
+                        }else if(resetStep2 < 1025){
+                            this.xAxis[0].options.labels.step = 64;
+                        }else if(resetStep2 < 2049){
+                            this.xAxis[0].options.labels.step = 128;
+                        }else if(resetStep2 > 2048){
+							this.xAxis[0].options.labels.step = 256;
 						}
                 	}
                 	// this.xAxis[0].options.labels.step = 1;
