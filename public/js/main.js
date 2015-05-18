@@ -56,7 +56,7 @@ myApp.controller('paController', function($scope, dataService, uiGridConstants) 
 	$scope.promise = null;
 
     $scope.stats = null;
-
+/*
     $scope.gridOptions = {};
 
   	$scope.totals = {};
@@ -87,17 +87,17 @@ myApp.controller('paController', function($scope, dataService, uiGridConstants) 
 			{displayName:'DMs', field: 'dm', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
 			{displayName:'LESs', field: 'les', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
             {displayName:'LCV', field: 'lcv', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true}
-			/*{displayName:'LOS', field: 'alarmlos', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
-			{displayName:'LOF', field: 'alarmlof', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
-			{displayName:'REM', field: 'alarmrem', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
-			{displayName:'AIS', field: 'alarmais', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true}*/
+			// {displayName:'LOS', field: 'alarmlos', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
+			// {displayName:'LOF', field: 'alarmlof', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
+			// {displayName:'REM', field: 'alarmrem', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
+			// {displayName:'AIS', field: 'alarmais', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true}
 		]
   	};
 
   	$scope.gridOptions.onRegisterApi = function (gridApi) {
 	    $scope.gridApi2 = gridApi;
 	}
-
+*/
   	$scope.update = function (cpe){
   		console.log("beep")
         var descRaw = $scope.cpe.desc;
@@ -111,7 +111,7 @@ myApp.controller('paController', function($scope, dataService, uiGridConstants) 
   			console.log(dataResponse);
   			if(dataResponse.data._embedded){
   				$scope.stats = dataResponse.data._embedded.stats;
-		        $scope.gridOptions.data = dataResponse.data._embedded.stats;
+		        // $scope.gridOptions.data = dataResponse.data._embedded.stats;
 		        // console.log(dataResponse.data._embedded.stats);
 		        // dataMassage(dataResponse.data._embedded.stats);
 		        $scope.totals = dataSummary(dataResponse.data._embedded.stats);
