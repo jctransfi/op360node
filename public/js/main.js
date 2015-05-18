@@ -56,7 +56,7 @@ myApp.controller('paController', function($scope, dataService, uiGridConstants) 
 	$scope.promise = null;
 
     $scope.stats = null;
-/*
+
     $scope.gridOptions = {};
 
   	$scope.totals = {};
@@ -97,7 +97,7 @@ myApp.controller('paController', function($scope, dataService, uiGridConstants) 
   	$scope.gridOptions.onRegisterApi = function (gridApi) {
 	    $scope.gridApi2 = gridApi;
 	}
-*/
+
   	$scope.update = function (cpe){
   		console.log("beep")
         var descRaw = $scope.cpe.desc;
@@ -111,9 +111,9 @@ myApp.controller('paController', function($scope, dataService, uiGridConstants) 
   			console.log(dataResponse);
   			if(dataResponse.data._embedded){
   				$scope.stats = dataResponse.data._embedded.stats;
-		        // $scope.gridOptions.data = dataResponse.data._embedded.stats;
-		        // console.log(dataResponse.data._embedded.stats);
-		        // dataMassage(dataResponse.data._embedded.stats);
+		        $scope.gridOptions.data = dataResponse.data._embedded.stats;
+		        console.log(dataResponse.data._embedded.stats);
+		        dataMassage(dataResponse.data._embedded.stats);
 		        $scope.totals = dataSummary(dataResponse.data._embedded.stats);
   			}else{
   				console.log("NO DATA");	
