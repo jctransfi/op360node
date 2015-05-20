@@ -216,7 +216,6 @@ function dataSummary(stats){
     		"count": 0,
     		"instances": []
     	},
-        ,
         "lcv": {
             "count": 0,
             "instances": []
