@@ -216,10 +216,6 @@ function dataSummary(stats){
     		"count": 0,
     		"instances": []
     	},
-        "lcv": {
-            "count": 0,
-            "instances": []
-        },
     	"total_err": 0
     }
 
@@ -261,10 +257,6 @@ function dataSummary(stats){
 			totals_obj.les.instances.push(stats[i].enddt)
 		}
 
-        if(parseInt(stats[i].lcv) !== 0){
-            totals_obj.lcv.instances.push(stats[i].enddt)
-        }
-
         totals_obj.lcv.instances.push(stats[i].endt)
 
 		if(parseInt(stats[i].alarmlos) !== 0){
@@ -292,7 +284,7 @@ function dataSummary(stats){
         arr_bes.push(parseInt(stats[i].bes));
         arr_dm.push(parseInt(stats[i].dm));
         arr_les.push(parseInt(stats[i].les));
-        arr_les.push(parseInt(stats[i].lcv));
+        arr_lcv.push(0);
         arr_los.push(parseInt(stats[i].alarmlos));
         arr_lof.push(parseInt(stats[i].alarmlof));
         arr_rem.push(parseInt(stats[i].alarmrem));
@@ -313,7 +305,6 @@ function dataSummary(stats){
 	totals_obj.lof.count = totalArray(arr_lof);
 	totals_obj.rem.count = totalArray(arr_rem);
 	totals_obj.ais.count = totalArray(arr_ais);
-    totals_obj.lcv.count = totalArray(arr_lcv);
 
 	var err_total = 0;
 
@@ -344,7 +335,6 @@ function dataMassage(stats){
 	var arr_bes = [];
 	var arr_dm = [];
 	var arr_les = [];
-    var arr_lcv = [];
 	var steps = 0;
 	// var arr_los = [];
 	// var arr_lof = [];
@@ -386,7 +376,6 @@ function dataMassage(stats){
             arr_bes.push(parseInt(stats[i].bes));
             arr_dm.push(parseInt(stats[i].dm));
             arr_les.push(parseInt(stats[i].les));
-            arr_les.push(parseInt(stats[i].lcv));
             // arr_los.push(parseInt(stats[i].alarmlos));
             // arr_lof.push(parseInt(stats[i].alarmlof));
             // arr_rem.push(parseInt(stats[i].alarmrem));
@@ -551,9 +540,6 @@ function dataMassage(stats){
         }, {
             name: 'LESs',
             data: arr_les
-        }, {
-            name: 'LCV',
-            data: arr_lcv
         }]
         // , {
         //     name: 'LOS',
