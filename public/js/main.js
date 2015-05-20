@@ -61,6 +61,20 @@ myApp.controller('paController', function($scope, dataService, uiGridConstants) 
 
   	$scope.totals = {};
 
+    var columnOpts = [
+            {displayName:'Interval End Date/Time', field: 'enddt', width: '20%', sort: { direction: uiGridConstants.DESC }},
+            {displayName:'ESs', field: 'es', type:'number', aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
+            {displayName:'UASs', field: 'uas', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
+            {displayName:'PCVs', field: 'pcv', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
+            {displayName:'SESs', field: 'ses', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
+            {displayName:'SEFs', field: 'sef', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
+            {displayName:'CSSs', field: 'css', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
+            {displayName:'BESs', field: 'bes', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
+            {displayName:'DMs', field: 'dm', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
+            {displayName:'LESs', field: 'les', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
+            {displayName:'LCV', field: 'lcv', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true}
+            ] 
+
   	$scope.gridOptions = {
         enableGridMenu: true,
   		showGridFooter: true,
@@ -75,23 +89,7 @@ myApp.controller('paController', function($scope, dataService, uiGridConstants) 
   		enableColumnMenus: false,
     	paginationPageSize: 10,
     	// enableVerticalScrollbar: uiGridConstants.scrollbars.NEVER,
-  		columnDefs: [
-			{displayName:'Interval End Date/Time', field: 'enddt', width: '20%', sort: { direction: uiGridConstants.DESC }},
-			{displayName:'ESs', field: 'es', type:'number', aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
-			{displayName:'UASs', field: 'uas', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
-			{displayName:'PCVs', field: 'pcv', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
-			{displayName:'SESs', field: 'ses', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
-			{displayName:'SEFs', field: 'sef', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
-			{displayName:'CSSs', field: 'css', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
-			{displayName:'BESs', field: 'bes', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
-			{displayName:'DMs', field: 'dm', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
-			{displayName:'LESs', field: 'les', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
-            {displayName:'LCV', field: 'lcv', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true}
-			// {displayName:'LOS', field: 'alarmlos', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
-			// {displayName:'LOF', field: 'alarmlof', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
-			// {displayName:'REM', field: 'alarmrem', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
-			// {displayName:'AIS', field: 'alarmais', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true}
-		]
+  		columnDefs: columnOpts
   	};
 
   	$scope.gridOptions.onRegisterApi = function (gridApi) {
@@ -99,7 +97,7 @@ myApp.controller('paController', function($scope, dataService, uiGridConstants) 
 	}
 
   	$scope.update = function (cpe){
-  		console.log("beep")
+  		// console.log("beep")
         var descRaw = $scope.cpe.desc;
         var descSerial = descRaw.replace(/\//g, "%2F");
   		var updateQ = {"vhid": $scope.cpe.vhid, "descr":  $scope.cpe.device + "" + descSerial,
@@ -119,8 +117,11 @@ myApp.controller('paController', function($scope, dataService, uiGridConstants) 
   				console.log("NO DATA");	
   				//$scope.gridOptions = {};
                 $scope.stats = {};
-  				$scope.gridOptions.data = {};
-                $("#line-chart").empty();
+                // $("#line-chart").empty();
+                var emptyObj = {};
+                dataMassage(emptyObj);
+                $scope.totals = {};
+                $scope.gridOptions.data = {};
   			}
 	    });
   	}
@@ -215,6 +216,11 @@ function dataSummary(stats){
     		"count": 0,
     		"instances": []
     	},
+        ,
+        "lcv": {
+            "count": 0,
+            "instances": []
+        },
     	"total_err": 0
     }
 
@@ -256,6 +262,10 @@ function dataSummary(stats){
 			totals_obj.les.instances.push(stats[i].enddt)
 		}
 
+        if(parseInt(stats[i].lcv) !== 0){
+            totals_obj.lcv.instances.push(stats[i].enddt)
+        }
+
         totals_obj.lcv.instances.push(stats[i].endt)
 
 		if(parseInt(stats[i].alarmlos) !== 0){
@@ -283,7 +293,7 @@ function dataSummary(stats){
         arr_bes.push(parseInt(stats[i].bes));
         arr_dm.push(parseInt(stats[i].dm));
         arr_les.push(parseInt(stats[i].les));
-        arr_lcv.push(0);
+        arr_les.push(parseInt(stats[i].lcv));
         arr_los.push(parseInt(stats[i].alarmlos));
         arr_lof.push(parseInt(stats[i].alarmlof));
         arr_rem.push(parseInt(stats[i].alarmrem));
@@ -304,6 +314,7 @@ function dataSummary(stats){
 	totals_obj.lof.count = totalArray(arr_lof);
 	totals_obj.rem.count = totalArray(arr_rem);
 	totals_obj.ais.count = totalArray(arr_ais);
+    totals_obj.lcv.count = totalArray(arr_lcv);
 
 	var err_total = 0;
 
@@ -334,6 +345,7 @@ function dataMassage(stats){
 	var arr_bes = [];
 	var arr_dm = [];
 	var arr_les = [];
+    var arr_lcv = [];
 	var steps = 0;
 	// var arr_los = [];
 	// var arr_lof = [];
@@ -362,22 +374,28 @@ function dataMassage(stats){
 		steps = 256;
 	}
 
-	for(i=0; i != stats.length; i++){
-		// console.log(stats[i].enddt)
-        arr_cat.push(stats[i].enddt);
-        arr_es.push(parseInt(stats[i].es));
-        arr_uas.push(parseInt(stats[i].uas));
-        arr_pcv.push(parseInt(stats[i].pcv));
-        arr_ses.push(parseInt(stats[i].ses));
-        arr_sef.push(parseInt(stats[i].sef));
-        arr_css.push(parseInt(stats[i].css));
-        arr_bes.push(parseInt(stats[i].bes));
-        arr_dm.push(parseInt(stats[i].dm));
-        arr_les.push(parseInt(stats[i].les));
-        // arr_los.push(parseInt(stats[i].alarmlos));
-        // arr_lof.push(parseInt(stats[i].alarmlof));
-        // arr_rem.push(parseInt(stats[i].alarmrem));
-        // arr_ais.push(parseInt(stats[i].alarmais));
+    try{
+        for(i=0; i != stats.length; i++){
+            // console.log(stats[i].enddt)
+            arr_cat.push(stats[i].enddt);
+            arr_es.push(parseInt(stats[i].es));
+            arr_uas.push(parseInt(stats[i].uas));
+            arr_pcv.push(parseInt(stats[i].pcv));
+            arr_ses.push(parseInt(stats[i].ses));
+            arr_sef.push(parseInt(stats[i].sef));
+            arr_css.push(parseInt(stats[i].css));
+            arr_bes.push(parseInt(stats[i].bes));
+            arr_dm.push(parseInt(stats[i].dm));
+            arr_les.push(parseInt(stats[i].les));
+            arr_les.push(parseInt(stats[i].lcv));
+            // arr_los.push(parseInt(stats[i].alarmlos));
+            // arr_lof.push(parseInt(stats[i].alarmlof));
+            // arr_rem.push(parseInt(stats[i].alarmrem));
+            // arr_ais.push(parseInt(stats[i].alarmais));
+        }
+    }catch(err) {
+        //probably empty
+        console.log(err)
     }
 
     // console.log(arr_ais)
@@ -534,6 +552,9 @@ function dataMassage(stats){
         }, {
             name: 'LESs',
             data: arr_les
+        }, {
+            name: 'LCV',
+            data: arr_lcv
         }]
         // , {
         //     name: 'LOS',
