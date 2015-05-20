@@ -63,9 +63,9 @@ router.route('/bears/:descr/:endt/:stdt/:vhid')
 
     //The url we want is: 'www.random.org/integers/?num=1&min=1&max=10&col=1&base=10&format=plain&rnd=new'
     var options = {
-      host: 'dcoeng1-paevdev-1.tnc.virtela.cc',
+      host: 'dcoeng1-paev-1.tnc.virtela.cc',
       path: urlpath,
-      port: 8092,
+      port: 8090,
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
