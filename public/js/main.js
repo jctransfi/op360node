@@ -27,16 +27,16 @@ myApp.config(function($routeProvider) {
 });
 
 myApp.service('dataService', function($http) {
-	delete $http.defaults.headers.common['X-Requested-With'];
-	this.getData = function(qString) {
-	    // $http() returns a $promise that we can add handlers with .then()
+  delete $http.defaults.headers.common['X-Requested-With'];
+  this.getData = function(qString) {
+      // $http() returns a $promise that we can add handlers with .then()
         var urlpath = '/api/bears/'+qString.descr+'/'+qString.endt+'/'+qString.stdt+'/'+qString.vhid;
         console.log(urlpath);
-	    return $http({
-	        method: 'GET',
-	        url: urlpath
-	     });
-	}
+      return $http({
+          method: 'GET',
+          url: urlpath
+       });
+  }
 });
 
 myApp.controller('aboutController', function($scope) {
@@ -48,18 +48,18 @@ myApp.controller('contactController', function($scope) {
 });
 
 myApp.controller('paController', function($scope, dataService, uiGridConstants) {
-	var defQ = {"vhid":"CABRCV1-CROCS-RTR-1", "descr":"Serial0%2F0%2F0", "stdt":"2015-01-01+00:00:00", "endt":"2015-01-01+23:59:00"};
+  var defQ = {"vhid":"CABRCV1-CROCS-RTR-1", "descr":"Serial0%2F0%2F0", "stdt":"2015-01-01+00:00:00", "endt":"2015-01-01+23:59:00"};
 
-	$scope.master = {vhid:"CABRCV1-CROCS-RTR-1", device: "Serial", desc: "0/0/0", stdt: "2015-01-01", sttm: "00:00:00", enddt: "2015-01-01", endtm: "01:00:00"};
-	$scope.cpe = angular.copy($scope.master);
+  $scope.master = {vhid:"CABRCV1-CROCS-RTR-1", device: "Serial", desc: "0/0/0", stdt: "2015-01-01", sttm: "00:00:00", enddt: "2015-01-01", endtm: "01:00:00"};
+  $scope.cpe = angular.copy($scope.master);
 
-	$scope.promise = null;
+  $scope.promise = null;
 
     $scope.stats = null;
 
     $scope.gridOptions = {};
 
-  	$scope.totals = {};
+    $scope.totals = {};
 
     var columnOpts = [
             {displayName:'Interval End Date/Time', field: 'enddt', width: '20%', sort: { direction: uiGridConstants.DESC }},
@@ -75,205 +75,205 @@ myApp.controller('paController', function($scope, dataService, uiGridConstants) 
             {displayName:'LCV', field: 'lcv', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true}
             ] 
 
-  	$scope.gridOptions = {
+    $scope.gridOptions = {
         enableGridMenu: true,
-  		showGridFooter: true,
+      showGridFooter: true,
         // footerTemplate: 'ui-grid/ui-footer-template-custom.html',
         // gridFooterTemplate: 'ui-grid/ui-footer-template-custom.html',
-  		enableFiltering: true,
+      enableFiltering: true,
         exporterMenuCsv: true,
         exporterMenuPdf: false,
         exporterCsvFilename: $scope.cpe.stdt + ' to ' + $scope.cpe.enddt + '.csv',
-    	// showColumnFooter: true,
-  		enablePaginationControls: false,
-  		enableColumnMenus: false,
-    	paginationPageSize: 10,
-    	// enableVerticalScrollbar: uiGridConstants.scrollbars.NEVER,
-  		columnDefs: columnOpts
-  	};
+      // showColumnFooter: true,
+      enablePaginationControls: false,
+      enableColumnMenus: false,
+      paginationPageSize: 10,
+      // enableVerticalScrollbar: uiGridConstants.scrollbars.NEVER,
+      columnDefs: columnOpts
+    };
 
-  	$scope.gridOptions.onRegisterApi = function (gridApi) {
-	    $scope.gridApi2 = gridApi;
-	}
+    $scope.gridOptions.onRegisterApi = function (gridApi) {
+      $scope.gridApi2 = gridApi;
+  }
 
-  	$scope.update = function (cpe){
-  		// console.log("beep")
+    $scope.update = function (cpe){
+      // console.log("beep")
         var descRaw = $scope.cpe.desc;
         var descSerial = descRaw.replace(/\//g, "%2F");
-  		var updateQ = {"vhid": $scope.cpe.vhid, "descr":  $scope.cpe.device + "" + descSerial,
-  		"stdt":  $scope.cpe.stdt + "+" + $scope.cpe.sttm, "endt":  $scope.cpe.enddt + "+" + $scope.cpe.endtm }
+      var updateQ = {"vhid": $scope.cpe.vhid, "descr":  $scope.cpe.device + "" + descSerial,
+      "stdt":  $scope.cpe.stdt + "+" + $scope.cpe.sttm, "endt":  $scope.cpe.enddt + "+" + $scope.cpe.endtm }
 
-  		console.log(updateQ);
+      console.log(updateQ);
 
-  		$scope.promise = dataService.getData(updateQ).then(function(dataResponse) {
-  			console.log(dataResponse);
-  			if(dataResponse.data._embedded){
-  				$scope.stats = dataResponse.data._embedded.stats;
-		        $scope.gridOptions.data = dataResponse.data._embedded.stats;
-		        console.log(dataResponse.data._embedded.stats);
-		        dataMassage(dataResponse.data._embedded.stats);
-		        $scope.totals = dataSummary(dataResponse.data._embedded.stats);
-  			}else{
-  				console.log("NO DATA");	
-  				//$scope.gridOptions = {};
+      $scope.promise = dataService.getData(updateQ).then(function(dataResponse) {
+        console.log(dataResponse);
+        if(dataResponse.data._embedded){
+          $scope.stats = dataResponse.data._embedded.stats;
+            $scope.gridOptions.data = dataResponse.data._embedded.stats;
+            console.log(dataResponse.data._embedded.stats);
+            dataMassage(dataResponse.data._embedded.stats);
+            $scope.totals = dataSummary(dataResponse.data._embedded.stats);
+        }else{
+          console.log("NO DATA"); 
+          //$scope.gridOptions = {};
                 $scope.stats = {};
                 // $("#line-chart").empty();
                 var emptyObj = {};
                 dataMassage(emptyObj);
                 $scope.totals = {};
                 $scope.gridOptions.data = {};
-  			}
-	    });
-  	}
+        }
+      });
+    }
 
     // $scope.promise = dataService.getData(defQ).then(function(dataResponse) {
-    // 	if(dataResponse.data._embedded){
-    // 		$scope.stats = dataResponse.data._embedded.stats;
-	   //      $scope.gridOptions.data = dataResponse.data._embedded.stats;
-	   //      dataMassage(dataResponse.data._embedded.stats);
-	   //      $scope.totals = dataSummary(dataResponse.data._embedded.stats);
-	   //      // console.log(totals);
-    // 	}else {
-    // 		console.log("NO DATA");
-    // 		// $scope.gridOptions = {};
-    // 		// $scope.gridOptions.data = {};
-    // 	}
+    //  if(dataResponse.data._embedded){
+    //    $scope.stats = dataResponse.data._embedded.stats;
+     //      $scope.gridOptions.data = dataResponse.data._embedded.stats;
+     //      dataMassage(dataResponse.data._embedded.stats);
+     //      $scope.totals = dataSummary(dataResponse.data._embedded.stats);
+     //      // console.log(totals);
+    //  }else {
+    //    console.log("NO DATA");
+    //    // $scope.gridOptions = {};
+    //    // $scope.gridOptions.data = {};
+    //  }
     // });
 
 });
 
 function dataSummary(stats){
 
-	var arr_es = [];
-	var arr_uas = [];
-	var arr_pcv = [];
-	var arr_ses = [];
-	var arr_sef = [];
-	var arr_css = [];
-	var arr_bes = [];
-	var arr_dm = [];
-	var arr_les = [];
-	var arr_los = [];
-	var arr_lof = [];
-	var arr_rem = [];
-	var arr_ais = [];
+  var arr_es = [];
+  var arr_uas = [];
+  var arr_pcv = [];
+  var arr_ses = [];
+  var arr_sef = [];
+  var arr_css = [];
+  var arr_bes = [];
+  var arr_dm = [];
+  var arr_les = [];
+  var arr_los = [];
+  var arr_lof = [];
+  var arr_rem = [];
+  var arr_ais = [];
     var arr_lcv = [];
 
-	var totals_obj = {
-    	"es": {
-    		"count": 0,
-    		"instances": []
-    	},
-    	"uas": {
-    		"count": 0,
-    		"instances": []
-    	},
-    	"pcv": {
-    		"count": 0,
-    		"instances": []
-    	},
-    	"ses": {
-    		"count": 0,
-    		"instances": []
-    	},
-    	"sef": {
-    		"count": 0,
-    		"instances": []
-    	},
-    	"css": {
-    		"count": 0,
-    		"instances": []
-    	},
-    	"bes": {
-    		"count": 0,
-    		"instances": []
-    	},
-    	"dm": {
-    		"count": 0,
-    		"instances": []
-    	},
-    	"les": {
-    		"count": 0,
-    		"instances": []
-    	},
+  var totals_obj = {
+      "es": {
+        "count": 0,
+        "instances": []
+      },
+      "uas": {
+        "count": 0,
+        "instances": []
+      },
+      "pcv": {
+        "count": 0,
+        "instances": []
+      },
+      "ses": {
+        "count": 0,
+        "instances": []
+      },
+      "sef": {
+        "count": 0,
+        "instances": []
+      },
+      "css": {
+        "count": 0,
+        "instances": []
+      },
+      "bes": {
+        "count": 0,
+        "instances": []
+      },
+      "dm": {
+        "count": 0,
+        "instances": []
+      },
+      "les": {
+        "count": 0,
+        "instances": []
+      },
         "lcv": {
             "count": 0,
             "instances": []
         },
-    	"los": {
-    		"count": 0,
-    		"instances": []
-    	},
-    	"lof": {
-    		"count": 0,
-    		"instances": []
-    	},
-    	"rem": {
-    		"count": 0,
-    		"instances": []
-    	},
-    	"ais": {
-    		"count": 0,
-    		"instances": []
-    	},
-    	"total_err": 0
+      "los": {
+        "count": 0,
+        "instances": []
+      },
+      "lof": {
+        "count": 0,
+        "instances": []
+      },
+      "rem": {
+        "count": 0,
+        "instances": []
+      },
+      "ais": {
+        "count": 0,
+        "instances": []
+      },
+      "total_err": 0
     }
 
-	for(i=0; i != stats.length; i++){
-		// console.log(stats[i].enddt)
-		if(parseInt(stats[i].es) !== 0){
-			totals_obj.es.instances.push(stats[i].enddt)
-		}
+  for(i=0; i != stats.length; i++){
+    // console.log(stats[i].enddt)
+    if(parseInt(stats[i].es) !== 0){
+      totals_obj.es.instances.push(stats[i].enddt)
+    }
 
-		if(parseInt(stats[i].uas) !== 0){
-			totals_obj.uas.instances.push(stats[i].enddt)
-		}
+    if(parseInt(stats[i].uas) !== 0){
+      totals_obj.uas.instances.push(stats[i].enddt)
+    }
 
-		if(parseInt(stats[i].pcv) !== 0){
-			totals_obj.pcv.instances.push(stats[i].enddt)
-		}
+    if(parseInt(stats[i].pcv) !== 0){
+      totals_obj.pcv.instances.push(stats[i].enddt)
+    }
 
-		if(parseInt(stats[i].ses) !== 0){
-			totals_obj.ses.instances.push(stats[i].enddt)
-		}
+    if(parseInt(stats[i].ses) !== 0){
+      totals_obj.ses.instances.push(stats[i].enddt)
+    }
 
-		if(parseInt(stats[i].sef) !== 0){
-			totals_obj.sef.instances.push(stats[i].enddt)
-		}
+    if(parseInt(stats[i].sef) !== 0){
+      totals_obj.sef.instances.push(stats[i].enddt)
+    }
 
-		if(parseInt(stats[i].css) !== 0){
-			totals_obj.css.instances.push(stats[i].enddt)
-		}
+    if(parseInt(stats[i].css) !== 0){
+      totals_obj.css.instances.push(stats[i].enddt)
+    }
 
-		if(parseInt(stats[i].bes) !== 0){
-			totals_obj.bes.instances.push(stats[i].enddt)
-		}
+    if(parseInt(stats[i].bes) !== 0){
+      totals_obj.bes.instances.push(stats[i].enddt)
+    }
 
-		if(parseInt(stats[i].dm) !== 0){
-			totals_obj.dm.instances.push(stats[i].enddt)
-		}
+    if(parseInt(stats[i].dm) !== 0){
+      totals_obj.dm.instances.push(stats[i].enddt)
+    }
 
-		if(parseInt(stats[i].les) !== 0){
-			totals_obj.les.instances.push(stats[i].enddt)
-		}
+    if(parseInt(stats[i].les) !== 0){
+      totals_obj.les.instances.push(stats[i].enddt)
+    }
 
         totals_obj.lcv.instances.push(stats[i].endt)
 
-		if(parseInt(stats[i].alarmlos) !== 0){
-			totals_obj.los.instances.push(stats[i].enddt)
-		}
+    if(parseInt(stats[i].alarmlos) !== 0){
+      totals_obj.los.instances.push(stats[i].enddt)
+    }
 
-		if(parseInt(stats[i].alarmlof) !== 0){
-			totals_obj.lof.instances.push(stats[i].enddt)
-		}
+    if(parseInt(stats[i].alarmlof) !== 0){
+      totals_obj.lof.instances.push(stats[i].enddt)
+    }
 
-		if(parseInt(stats[i].alarmrem) !== 0){
-			totals_obj.rem.instances.push(stats[i].enddt)
-		}
+    if(parseInt(stats[i].alarmrem) !== 0){
+      totals_obj.rem.instances.push(stats[i].enddt)
+    }
 
-		if(parseInt(stats[i].alarmais) !== 0){
-			totals_obj.ais.instances.push(stats[i].enddt)
-		}
+    if(parseInt(stats[i].alarmais) !== 0){
+      totals_obj.ais.instances.push(stats[i].enddt)
+    }
 
         arr_es.push(parseInt(stats[i].es));
         arr_uas.push(parseInt(stats[i].uas));
@@ -291,77 +291,77 @@ function dataSummary(stats){
         arr_ais.push(parseInt(stats[i].alarmais));
     }
 
-	totals_obj.es.count = totalArray(arr_es);
-	totals_obj.uas.count = totalArray(arr_uas);
-	totals_obj.pcv.count = totalArray(arr_pcv);
-	totals_obj.ses.count = totalArray(arr_ses);
-	totals_obj.sef.count = totalArray(arr_sef);
-	totals_obj.css.count = totalArray(arr_css);
-	totals_obj.bes.count = totalArray(arr_bes);
-	totals_obj.dm.count = totalArray(arr_dm);
-	totals_obj.les.count = totalArray(arr_les);
+  totals_obj.es.count = totalArray(arr_es);
+  totals_obj.uas.count = totalArray(arr_uas);
+  totals_obj.pcv.count = totalArray(arr_pcv);
+  totals_obj.ses.count = totalArray(arr_ses);
+  totals_obj.sef.count = totalArray(arr_sef);
+  totals_obj.css.count = totalArray(arr_css);
+  totals_obj.bes.count = totalArray(arr_bes);
+  totals_obj.dm.count = totalArray(arr_dm);
+  totals_obj.les.count = totalArray(arr_les);
     totals_obj.lcv.count = totalArray(arr_lcv);
-	totals_obj.los.count = totalArray(arr_los);
-	totals_obj.lof.count = totalArray(arr_lof);
-	totals_obj.rem.count = totalArray(arr_rem);
-	totals_obj.ais.count = totalArray(arr_ais);
+  totals_obj.los.count = totalArray(arr_los);
+  totals_obj.lof.count = totalArray(arr_lof);
+  totals_obj.rem.count = totalArray(arr_rem);
+  totals_obj.ais.count = totalArray(arr_ais);
 
-	var err_total = 0;
+  var err_total = 0;
 
-	$.each( totals_obj, function( key, value ) {
-		if(key === 'total_err' || key === 'los' || key === 'lof' || key === 'rem' || key === 'ais'){
+  $.each( totals_obj, function( key, value ) {
+    if(key === 'total_err' || key === 'los' || key === 'lof' || key === 'rem' || key === 'ais'){
             //no op
-		}else {
+    }else {
             err_total += this.count;
             console.log(key + ":" + this.count)
         }
-		console.log(err_total)
-	});
+    console.log(err_total)
+  });
 
-	totals_obj.total_err = err_total;
+  totals_obj.total_err = err_total;
 
     return totals_obj;
 }
 
 function dataMassage(stats){
 
-	var arr_cat = [];
-	var arr_es = [];
-	var arr_uas = [];
-	var arr_pcv = [];
-	var arr_ses = [];
-	var arr_sef = [];
-	var arr_css = [];
-	var arr_bes = [];
-	var arr_dm = [];
-	var arr_les = [];
-	var steps = 0;
-	// var arr_los = [];
-	// var arr_lof = [];
-	// var arr_rem = [];
-	// var arr_ais = [];
+  var arr_cat = [];
+  var arr_es = [];
+  var arr_uas = [];
+  var arr_pcv = [];
+  var arr_ses = [];
+  var arr_sef = [];
+  var arr_css = [];
+  var arr_bes = [];
+  var arr_dm = [];
+  var arr_les = [];
+  var steps = 0;
+  // var arr_los = [];
+  // var arr_lof = [];
+  // var arr_rem = [];
+  // var arr_ais = [];
 
-	// set steps
+  // set steps
     //TODO: change this to something more algorithmin
-	if(stats.length < 17){
-		steps = 1;
-	}else if(stats.length < 33){
-		steps = 2;
-	}else if(stats.length < 65){
-		steps = 4;
-	}else if(stats.length < 129){
-		steps = 8;
-	}else if(stats.length < 257){
-		steps = 16;
-	}else if(stats.length < 513){
+  if(stats.length < 17){
+    steps = 1;
+  }else if(stats.length < 33){
+    steps = 2;
+  }else if(stats.length < 65){
+    steps = 4;
+  }else if(stats.length < 129){
+    steps = 8;
+  }else if(stats.length < 257){
+    steps = 16;
+  }else if(stats.length < 513){
         steps = 32;
     }else if(stats.length < 1025){
         steps = 64;
     }else if(stats.length < 2049){
         steps = 128;
     }else if(stats.length > 2048){
-		steps = 256;
-	}
+    steps = 256;
+  }
 
     try{
         for(i=0; i != stats.length; i++){
@@ -395,26 +395,26 @@ function dataMassage(stats){
             spacingLeft: 2,
             events: {
                 selection: function (event) {
-                	console.log(event);
-                	if(event.resetSelection === true){
-                		var resetStep = this.xAxis[0].dataMax+1;
-                		console.log("loggin reset:" + resetStep);
-            			if(resetStep < 17){
-							this.xAxis[0].options.labels.step = 1;
-							console.log("reset zoom");
-						}else if(resetStep < 33){
-							this.xAxis[0].options.labels.step = 2;
-							console.log("reset zoom");
-						}else if(resetStep < 65){
-							this.xAxis[0].options.labels.step = 4;
-							console.log("reset zoom");
-						}else if(resetStep < 129){
-							this.xAxis[0].options.labels.step = 8;
-							console.log("reset zoom");
-						}else if(resetStep < 257){
-							this.xAxis[0].options.labels.step = 16;
-							console.log("reset zoom");
-						}else if(resetStep < 513){
+                  console.log(event);
+                  if(event.resetSelection === true){
+                    var resetStep = this.xAxis[0].dataMax+1;
+                    console.log("loggin reset:" + resetStep);
+                  if(resetStep < 17){
+              this.xAxis[0].options.labels.step = 1;
+              console.log("reset zoom");
+            }else if(resetStep < 33){
+              this.xAxis[0].options.labels.step = 2;
+              console.log("reset zoom");
+            }else if(resetStep < 65){
+              this.xAxis[0].options.labels.step = 4;
+              console.log("reset zoom");
+            }else if(resetStep < 129){
+              this.xAxis[0].options.labels.step = 8;
+              console.log("reset zoom");
+            }else if(resetStep < 257){
+              this.xAxis[0].options.labels.step = 16;
+              console.log("reset zoom");
+            }else if(resetStep < 513){
                             this.xAxis[0].options.labels.step = 32;
                             console.log("reset zoom");
                         }else if(resetStep < 1025){
@@ -424,36 +424,36 @@ function dataMassage(stats){
                             this.xAxis[0].options.labels.step = 128;
                             console.log("reset zoom");
                         }else if(resetStep > 2048){
-							this.xAxis[0].options.labels.step = 256;
-							console.log("reset zoom");
-						}
-                	}else {
-                		var resetStep2 = event.xAxis[0].max - event.xAxis[0].min;
-                		// console.log(resetStep2);
-                		// console.log("zoom MAX: " + event.xAxis[0].max);
-                		if(resetStep2 < 17){
-							this.xAxis[0].options.labels.step = 1;
-						}else if(resetStep2 < 33){
-							this.xAxis[0].options.labels.step = 2;
-						}else if(resetStep2 < 65){
-							this.xAxis[0].options.labels.step = 4;
-						}else if(resetStep2 < 129){
-							this.xAxis[0].options.labels.step = 8;
-						}else if(resetStep2 < 257){
-							this.xAxis[0].options.labels.step = 16;
-						}else if(resetStep2 < 513){
+              this.xAxis[0].options.labels.step = 256;
+              console.log("reset zoom");
+            }
+                  }else {
+                    var resetStep2 = event.xAxis[0].max - event.xAxis[0].min;
+                    // console.log(resetStep2);
+                    // console.log("zoom MAX: " + event.xAxis[0].max);
+                    if(resetStep2 < 17){
+              this.xAxis[0].options.labels.step = 1;
+            }else if(resetStep2 < 33){
+              this.xAxis[0].options.labels.step = 2;
+            }else if(resetStep2 < 65){
+              this.xAxis[0].options.labels.step = 4;
+            }else if(resetStep2 < 129){
+              this.xAxis[0].options.labels.step = 8;
+            }else if(resetStep2 < 257){
+              this.xAxis[0].options.labels.step = 16;
+            }else if(resetStep2 < 513){
                             this.xAxis[0].options.labels.step = 32;
                         }else if(resetStep2 < 1025){
                             this.xAxis[0].options.labels.step = 64;
                         }else if(resetStep2 < 2049){
                             this.xAxis[0].options.labels.step = 128;
                         }else if(resetStep2 > 2048){
-							this.xAxis[0].options.labels.step = 256;
-						}
-                	}
-                	// this.xAxis[0].options.labels.step = 1;
-                	// console.log(this.xAxis[0].min);
-                	// console.log(this.xAxis[0].max);
+              this.xAxis[0].options.labels.step = 256;
+            }
+                  }
+                  // this.xAxis[0].options.labels.step = 1;
+                  // console.log(this.xAxis[0].min);
+                  // console.log(this.xAxis[0].max);
                     // var text,
                     //     label;
                     // if (event.xAxis) {
@@ -482,10 +482,10 @@ function dataMassage(stats){
         xAxis: {
             categories: arr_cat,
             labels: {
-            	step: steps,
+              step: steps,
                 formatter: function () {
-                	var s = this.value;
-                	var split = s.split(" ");
+                  var s = this.value;
+                  var split = s.split(" ");
 
                     return split[0] + '<br/>' + split[1].slice(0,5)
                 }
@@ -556,7 +556,7 @@ function dataMassage(stats){
         // }]
     });
 
-	// $('#line-chart').highcharts({
+  // $('#line-chart').highcharts({
  //        chart: {
  //            type: 'area',
  //            zoomType: 'x'
@@ -565,7 +565,7 @@ function dataMassage(stats){
  //            text: 'Error Counters'
  //        },
  //        xAxis: {
- //        	categories: arr_cat,
+ //         categories: arr_cat,
  //            allowDecimals: false,
  //            labels: {
  //                formatter: function () {
@@ -574,7 +574,7 @@ function dataMassage(stats){
  //            }
  //        },
  //        yAxis: {
- //        	allowDecimals: false,
+ //         allowDecimals: false,
  //            title: {
  //                text: 'Errors'
  //            }
@@ -641,10 +641,10 @@ function dataMassage(stats){
 }
 
 function totalArray(arr){
-	var total = 0;
-	$.each(arr,function() {
-	    total += this;
-	});
+  var total = 0;
+  $.each(arr,function() {
+      total += this;
+  });
 
-	return total;
+  return total;
 }
