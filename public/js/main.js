@@ -489,7 +489,7 @@ function dataMassage(stats){
               step: steps,
                 formatter: function () {
                   var s = this.value;
-                  var split = s.split(" ");
+                  // var split = s.split(" ");
                   console.log(this.value);
                   // return split[0] + '<br/>' + split[1].slice(0,5);
                 }
