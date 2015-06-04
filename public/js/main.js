@@ -62,28 +62,28 @@ myApp.controller('paController', function($scope, dataService, uiGridConstants) 
     $scope.totals = {};
 
     var columnOpts = [
-            {displayName:'Interval End Date/Time', field: 'enddt', width: '20%', sort: { direction: uiGridConstants.DESC }},
-            {displayName:'ESs', field: 'es', type:'number', aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
-            {displayName:'UASs', field: 'uas', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
-            {displayName:'PCVs', field: 'pcv', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
-            {displayName:'SESs', field: 'ses', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
-            {displayName:'SEFs', field: 'sef', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
-            {displayName:'CSSs', field: 'css', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
-            {displayName:'BESs', field: 'bes', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
-            {displayName:'DMs', field: 'dm', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
-            {displayName:'LESs', field: 'les', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
-            {displayName:'LCV', field: 'lcv', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true}
-            ] 
+      {displayName:'Interval End Date/Time', field: 'enddt', width: '20%', sort: { direction: uiGridConstants.DESC }},
+      {displayName:'ESs', field: 'es', type:'number', aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
+      {displayName:'UASs', field: 'uas', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
+      {displayName:'PCVs', field: 'pcv', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
+      {displayName:'SESs', field: 'ses', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
+      {displayName:'SEFs', field: 'sef', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
+      {displayName:'CSSs', field: 'css', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
+      {displayName:'BESs', field: 'bes', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
+      {displayName:'DMs', field: 'dm', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
+      {displayName:'LESs', field: 'les', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
+      {displayName:'LCV', field: 'lcv', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true}
+    ] 
 
     $scope.gridOptions = {
-        enableGridMenu: true,
+      enableGridMenu: true,
       showGridFooter: true,
-        // footerTemplate: 'ui-grid/ui-footer-template-custom.html',
-        // gridFooterTemplate: 'ui-grid/ui-footer-template-custom.html',
+      // footerTemplate: 'ui-grid/ui-footer-template-custom.html',
+      // gridFooterTemplate: 'ui-grid/ui-footer-template-custom.html',
       enableFiltering: true,
-        exporterMenuCsv: true,
-        exporterMenuPdf: false,
-        exporterCsvFilename: $scope.cpe.stdt + ' to ' + $scope.cpe.enddt + '.csv',
+      exporterMenuCsv: true,
+      exporterMenuPdf: false,
+      exporterCsvFilename: $scope.cpe.stdt + ' to ' + $scope.cpe.enddt + '.csv',
       // showColumnFooter: true,
       enablePaginationControls: false,
       enableColumnMenus: false,
@@ -370,6 +370,7 @@ function dataMassage(stats){
     console.log(stats.length);
     for(i=0; i != stats.length; i++){
       arr_cat.push(stats[i].enddt);
+      console.log(stats[i].enddt)
       arr_es.push(parseInt(stats[i].es));
       arr_uas.push(parseInt(stats[i].uas));
       arr_pcv.push(parseInt(stats[i].pcv));
@@ -390,6 +391,8 @@ function dataMassage(stats){
     console.log(err)
   }
   // console.log(arr_ais)
+
+  console.log(arr_cat);
 
   $('#line-chart').highcharts({
     chart: {
