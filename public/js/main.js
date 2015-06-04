@@ -257,7 +257,7 @@ function dataSummary(stats){
       totals_obj.les.instances.push(stats[i].enddt)
     }
 
-    if(parseInt(stats[i].les) !== 0){
+    if(parseInt(stats[i].lcv) !== 0){
       totals_obj.lcv.instances.push(stats[i].endt)
     }
 
@@ -286,7 +286,7 @@ function dataSummary(stats){
         arr_bes.push(parseInt(stats[i].bes));
         arr_dm.push(parseInt(stats[i].dm));
         arr_les.push(parseInt(stats[i].les));
-        arr_lcv.push(stats[i].les);
+        arr_lcv.push(parseInt(stats[i].lcv));
         arr_los.push(parseInt(stats[i].alarmlos));
         arr_lof.push(parseInt(stats[i].alarmlof));
         arr_rem.push(parseInt(stats[i].alarmrem));
