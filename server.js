@@ -29,7 +29,7 @@ var express = require('express');
 var app = express();
 
 // var port = process.env.PORT || 8090; // dev port
-var port = process.env.PORT || 8092; // set our port
+var port = process.env.PORT || 80; // set our port
 
 // create our router
 var router = express.Router();
@@ -63,9 +63,9 @@ router.route('/bears/:descr/:endt/:stdt/:vhid')
 
     //The url we want is: 'www.random.org/integers/?num=1&min=1&max=10&col=1&base=10&format=plain&rnd=new'
     var options = {
-      host: 'dcoeng1-paev-1.tnc.virtela.cc',
+      host: 'dcoeng1-paevdev-1.tnc.virtela.cc',
       path: urlpath,
-      port: 8090,
+      port: 8092,
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
