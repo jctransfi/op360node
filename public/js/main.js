@@ -390,7 +390,6 @@ function dataMassage(stats){
     //probably empty
     console.log(err)
   }
-  // console.log(arr_ais)
 
   console.log(arr_cat);
 
@@ -467,14 +466,14 @@ function dataMassage(stats){
     xAxis: {
       categories: arr_cat,
       labels: {
-        step: steps,
-        formatter: function () {
-          var s = this.value;
-          // var split = s.split(" ");
-          console.log(this.value);
-          return this.value;
-          // return split[0] + '<br/>' + split[1].slice(0,5);
-        }
+        step: steps
+        // formatter: function () {
+        //   var s = this.value;
+        //   // var split = s.split(" ");
+        //   console.log(this.value);
+        //   return this.value;
+        //   // return split[0] + '<br/>' + split[1].slice(0,5);
+        // }
       }
     },
     yAxis: {
