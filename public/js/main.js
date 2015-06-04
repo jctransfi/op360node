@@ -277,21 +277,21 @@ function dataSummary(stats){
       totals_obj.ais.instances.push(stats[i].enddt)
     }
 
-        arr_es.push(parseInt(stats[i].es));
-        arr_uas.push(parseInt(stats[i].uas));
-        arr_pcv.push(parseInt(stats[i].pcv));
-        arr_ses.push(parseInt(stats[i].ses));
-        arr_sef.push(parseInt(stats[i].sef));
-        arr_css.push(parseInt(stats[i].css));
-        arr_bes.push(parseInt(stats[i].bes));
-        arr_dm.push(parseInt(stats[i].dm));
-        arr_les.push(parseInt(stats[i].les));
-        arr_lcv.push(parseInt(stats[i].lcv));
-        arr_los.push(parseInt(stats[i].alarmlos));
-        arr_lof.push(parseInt(stats[i].alarmlof));
-        arr_rem.push(parseInt(stats[i].alarmrem));
-        arr_ais.push(parseInt(stats[i].alarmais));
-    }
+    arr_es.push(parseInt(stats[i].es));
+    arr_uas.push(parseInt(stats[i].uas));
+    arr_pcv.push(parseInt(stats[i].pcv));
+    arr_ses.push(parseInt(stats[i].ses));
+    arr_sef.push(parseInt(stats[i].sef));
+    arr_css.push(parseInt(stats[i].css));
+    arr_bes.push(parseInt(stats[i].bes));
+    arr_dm.push(parseInt(stats[i].dm));
+    arr_les.push(parseInt(stats[i].les));
+    arr_lcv.push(parseInt(stats[i].lcv));
+    arr_los.push(parseInt(stats[i].alarmlos));
+    arr_lof.push(parseInt(stats[i].alarmlof));
+    arr_rem.push(parseInt(stats[i].alarmrem));
+    arr_ais.push(parseInt(stats[i].alarmais));
+  }
 
   totals_obj.es.count = totalArray(arr_es);
   totals_obj.uas.count = totalArray(arr_uas);
@@ -370,7 +370,6 @@ function dataMassage(stats){
     console.log(stats.length);
     for(i=0; i != stats.length; i++){
       arr_cat.push(stats[i].enddt);
-      console.log(stats[i].enddt)
       arr_es.push(parseInt(stats[i].es));
       arr_uas.push(parseInt(stats[i].uas));
       arr_pcv.push(parseInt(stats[i].pcv));
@@ -391,7 +390,7 @@ function dataMassage(stats){
     console.log(err)
   }
 
-  console.log(arr_cat);
+  console.log(arr_les)
 
   $('#line-chart').highcharts({
     chart: {
