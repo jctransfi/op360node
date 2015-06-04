@@ -345,7 +345,7 @@ function dataMassage(stats){
   // var arr_ais = [];
 
   // set steps
-    //TODO: change this to something more algorithmin
+  //TODO: change this to something more algorithmin
   if(stats.length < 17){
     steps = 1;
   }else if(stats.length < 33){
@@ -357,53 +357,52 @@ function dataMassage(stats){
   }else if(stats.length < 257){
     steps = 16;
   }else if(stats.length < 513){
-        steps = 32;
-    }else if(stats.length < 1025){
-        steps = 64;
-    }else if(stats.length < 2049){
-        steps = 128;
-    }else if(stats.length > 2048){
+    steps = 32;
+  }else if(stats.length < 1025){
+    steps = 64;
+  }else if(stats.length < 2049){
+    steps = 128;
+  }else if(stats.length > 2048){
     steps = 256;
   }
 
-    try{
-        for(i=0; i != stats.length; i++){
-            // console.log(stats[i].enddt)
-            arr_cat.push(stats[i].enddt);
-            arr_es.push(parseInt(stats[i].es));
-            arr_uas.push(parseInt(stats[i].uas));
-            arr_pcv.push(parseInt(stats[i].pcv));
-            arr_ses.push(parseInt(stats[i].ses));
-            arr_sef.push(parseInt(stats[i].sef));
-            arr_css.push(parseInt(stats[i].css));
-            arr_bes.push(parseInt(stats[i].bes));
-            arr_dm.push(parseInt(stats[i].dm));
-            arr_les.push(parseInt(stats[i].les));
-            arr_les.push(parseInt(stats[i].lcv));
-            // arr_los.push(parseInt(stats[i].alarmlos));
-            // arr_lof.push(parseInt(stats[i].alarmlof));
-            // arr_rem.push(parseInt(stats[i].alarmrem));
-            // arr_ais.push(parseInt(stats[i].alarmais));
-        }
-    }catch(err) {
-        //probably empty
-        console.log(err)
+  try{
+    console.log(stats.length);
+    for(i=0; i != stats.length; i++){
+      arr_cat.push(stats[i].enddt);
+      arr_es.push(parseInt(stats[i].es));
+      arr_uas.push(parseInt(stats[i].uas));
+      arr_pcv.push(parseInt(stats[i].pcv));
+      arr_ses.push(parseInt(stats[i].ses));
+      arr_sef.push(parseInt(stats[i].sef));
+      arr_css.push(parseInt(stats[i].css));
+      arr_bes.push(parseInt(stats[i].bes));
+      arr_dm.push(parseInt(stats[i].dm));
+      arr_les.push(parseInt(stats[i].les));
+      arr_les.push(parseInt(stats[i].lcv));
+      // arr_los.push(parseInt(stats[i].alarmlos));
+      // arr_lof.push(parseInt(stats[i].alarmlof));
+      // arr_rem.push(parseInt(stats[i].alarmrem));
+      // arr_ais.push(parseInt(stats[i].alarmais));
     }
+  }catch(err) {
+    //probably empty
+    console.log(err)
+  }
+  // console.log(arr_ais)
 
-    // console.log(arr_ais)
-
-    $('#line-chart').highcharts({
-        chart: {
-            height: 280,
-            zoomType: 'x',
-            spacingLeft: 2,
-            events: {
-                selection: function (event) {
-                  console.log(event);
-                  if(event.resetSelection === true){
-                    var resetStep = this.xAxis[0].dataMax+1;
-                    console.log("loggin reset:" + resetStep);
-                  if(resetStep < 17){
+  $('#line-chart').highcharts({
+    chart: {
+      height: 280,
+      zoomType: 'x',
+      spacingLeft: 2,
+      events: {
+        selection: function (event) {
+          console.log(event);
+          if(event.resetSelection === true){
+            var resetStep = this.xAxis[0].dataMax+1;
+            console.log("loggin reset:" + resetStep);
+            if(resetStep < 17){
               this.xAxis[0].options.labels.step = 1;
               console.log("reset zoom");
             }else if(resetStep < 33){
@@ -419,23 +418,23 @@ function dataMassage(stats){
               this.xAxis[0].options.labels.step = 16;
               console.log("reset zoom");
             }else if(resetStep < 513){
-                            this.xAxis[0].options.labels.step = 32;
-                            console.log("reset zoom");
-                        }else if(resetStep < 1025){
-                            this.xAxis[0].options.labels.step = 64;
-                            console.log("reset zoom");
-                        }else if(resetStep < 2049){
-                            this.xAxis[0].options.labels.step = 128;
-                            console.log("reset zoom");
-                        }else if(resetStep > 2048){
+              this.xAxis[0].options.labels.step = 32;
+              console.log("reset zoom");
+            }else if(resetStep < 1025){
+              this.xAxis[0].options.labels.step = 64;
+              console.log("reset zoom");
+            }else if(resetStep < 2049){
+              this.xAxis[0].options.labels.step = 128;
+              console.log("reset zoom");
+            }else if(resetStep > 2048){
               this.xAxis[0].options.labels.step = 256;
               console.log("reset zoom");
             }
-                  }else {
-                    var resetStep2 = event.xAxis[0].max - event.xAxis[0].min;
-                    // console.log(resetStep2);
-                    // console.log("zoom MAX: " + event.xAxis[0].max);
-                    if(resetStep2 < 17){
+          }else {
+            var resetStep2 = event.xAxis[0].max - event.xAxis[0].min;
+            // console.log(resetStep2);
+            // console.log("zoom MAX: " + event.xAxis[0].max);
+            if(resetStep2 < 17){
               this.xAxis[0].options.labels.step = 1;
             }else if(resetStep2 < 33){
               this.xAxis[0].options.labels.step = 2;
@@ -446,124 +445,102 @@ function dataMassage(stats){
             }else if(resetStep2 < 257){
               this.xAxis[0].options.labels.step = 16;
             }else if(resetStep2 < 513){
-                            this.xAxis[0].options.labels.step = 32;
-                        }else if(resetStep2 < 1025){
-                            this.xAxis[0].options.labels.step = 64;
-                        }else if(resetStep2 < 2049){
-                            this.xAxis[0].options.labels.step = 128;
-                        }else if(resetStep2 > 2048){
+              this.xAxis[0].options.labels.step = 32;
+            }else if(resetStep2 < 1025){
+              this.xAxis[0].options.labels.step = 64;
+            }else if(resetStep2 < 2049){
+              this.xAxis[0].options.labels.step = 128;
+            }else if(resetStep2 > 2048){
               this.xAxis[0].options.labels.step = 256;
             }
-                  }
-                  // this.xAxis[0].options.labels.step = 1;
-                  // console.log(this.xAxis[0].min);
-                  // console.log(this.xAxis[0].max);
-                    // var text,
-                    //     label;
-                    // if (event.xAxis) {
-                    //     text = 'min: ' + Highcharts.numberFormat(event.xAxis[0].min, 2) + ', max: ' + Highcharts.numberFormat(event.xAxis[0].max, 2);
-                    // } else {
-                    //     text = 'Selection reset';
-                    // }
-                    // label = this.renderer.label(text, 100, 120)
-                    //     .attr({
-                    //         fill: Highcharts.getOptions().colors[0],
-                    //         padding: 10,
-                    //         r: 5,
-                    //         zIndex: 8
-                    //     })
-                    //     .css({
-                    //         color: '#FFFFFF'
-                    //     })
-                    //     .add();
-                }
-            }
-        },
-        title: {
-            text: '',
-            x: -20 //center
-        },
-        xAxis: {
-            categories: arr_cat,
-            labels: {
-              step: steps,
-              formatter: function () {
-                var s = this.value;
-                // var split = s.split(" ");
-                console.log(this.value);
-                return this.value;
-                // return split[0] + '<br/>' + split[1].slice(0,5);
-              }
-            }
-        },
-        yAxis: {
-            allowDecimals: false,  
-            min: 0,
-            title: {
-                text: 'Errors'
-            },
-            plotLines: [{
-                value: 0,
-                width: 1,
-                color: '#808080'
-            }]
-        },
-        tooltip: {
-            valueSuffix: ''
-        },
-        legend: {
-            layout: 'horizontal',
-            align: 'left',
-            verticalAlign: 'top',
-            borderWidth: 0,
-            y: 10
-        },
-        series: [{
-            name: 'ESs',
-            data: arr_es
-        }, {
-            name: 'UASs',
-            data: arr_uas
-        }, {
-            name: 'PCVs',
-            data: arr_pcv
-        }, {
-            name: 'SESs',
-            data: arr_ses
-        }, {
-            name: 'SEFs',
-            data: arr_sef
-        }, {
-            name: 'CSSs',
-            data: arr_css
-        }, {
-            name: 'BESs',
-            data: arr_bes
-        }, {
-            name: 'DMs',
-            data: arr_dm
-        }, {
-            name: 'LESs',
-            data: arr_les
-        }, {
-            name: 'LCVs',
-            data: arr_lcv
-        }]
-        // , {
-        //     name: 'LOS',
-        //     data: arr_los
-        // }, {
-        //     name: 'LOF',
-        //     data: arr_lof
-        // }, {
-        //     name: 'REM',
-        //     data: arr_rem
-        // }, {
-        //     name: 'AIS',
-        //     data: arr_ais
-        // }]
-    });
-
+          }
+        }
+      }
+    },
+    title: {
+      text: '',
+      x: -20 //center
+    },
+    xAxis: {
+      categories: arr_cat,
+      labels: {
+        step: steps,
+        formatter: function () {
+          var s = this.value;
+          // var split = s.split(" ");
+          console.log(this.value);
+          return this.value;
+          // return split[0] + '<br/>' + split[1].slice(0,5);
+        }
+      }
+    },
+    yAxis: {
+      allowDecimals: false,  
+      min: 0,
+      title: {
+          text: 'Errors'
+      },
+      plotLines: [{
+          value: 0,
+          width: 1,
+          color: '#808080'
+      }]
+    },
+    tooltip: {
+      valueSuffix: ''
+    },
+    legend: {
+      layout: 'horizontal',
+      align: 'left',
+      verticalAlign: 'top',
+      borderWidth: 0,
+      y: 10
+    },
+      series: [{
+          name: 'ESs',
+          data: arr_es
+      }, {
+          name: 'UASs',
+          data: arr_uas
+      }, {
+          name: 'PCVs',
+          data: arr_pcv
+      }, {
+          name: 'SESs',
+          data: arr_ses
+      }, {
+          name: 'SEFs',
+          data: arr_sef
+      }, {
+          name: 'CSSs',
+          data: arr_css
+      }, {
+          name: 'BESs',
+          data: arr_bes
+      }, {
+          name: 'DMs',
+          data: arr_dm
+      }, {
+          name: 'LESs',
+          data: arr_les
+      }, {
+          name: 'LCVs',
+          data: arr_lcv
+      }]
+      // , {
+      //     name: 'LOS',
+      //     data: arr_los
+      // }, {
+      //     name: 'LOF',
+      //     data: arr_lof
+      // }, {
+      //     name: 'REM',
+      //     data: arr_rem
+      // }, {
+      //     name: 'AIS',
+      //     data: arr_ais
+      // }]
+  });
 }
 
 function totalArray(arr){
