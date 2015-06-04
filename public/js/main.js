@@ -379,7 +379,7 @@ function dataMassage(stats){
       arr_bes.push(parseInt(stats[i].bes));
       arr_dm.push(parseInt(stats[i].dm));
       arr_les.push(parseInt(stats[i].les));
-      arr_les.push(parseInt(stats[i].lcv));
+      arr_lcv.push(parseInt(stats[i].lcv));
       // arr_los.push(parseInt(stats[i].alarmlos));
       // arr_lof.push(parseInt(stats[i].alarmlof));
       // arr_rem.push(parseInt(stats[i].alarmrem));
