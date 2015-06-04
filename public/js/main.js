@@ -157,7 +157,7 @@ function dataSummary(stats){
   var arr_lof = [];
   var arr_rem = [];
   var arr_ais = [];
-    var arr_lcv = [];
+  var arr_lcv = [];
 
   var totals_obj = {
       "es": {
@@ -196,10 +196,10 @@ function dataSummary(stats){
         "count": 0,
         "instances": []
       },
-        "lcv": {
-            "count": 0,
-            "instances": []
-        },
+      "lcv": {
+          "count": 0,
+          "instances": []
+      },
       "los": {
         "count": 0,
         "instances": []
@@ -257,7 +257,9 @@ function dataSummary(stats){
       totals_obj.les.instances.push(stats[i].enddt)
     }
 
-        totals_obj.lcv.instances.push(stats[i].endt)
+    if(parseInt(stats[i].les) !== 0){
+      totals_obj.lcv.instances.push(stats[i].endt)
+    }
 
     if(parseInt(stats[i].alarmlos) !== 0){
       totals_obj.los.instances.push(stats[i].enddt)
@@ -284,7 +286,7 @@ function dataSummary(stats){
         arr_bes.push(parseInt(stats[i].bes));
         arr_dm.push(parseInt(stats[i].dm));
         arr_les.push(parseInt(stats[i].les));
-        arr_lcv.push(0);
+        arr_lcv.push(stats[i].les);
         arr_los.push(parseInt(stats[i].alarmlos));
         arr_lof.push(parseInt(stats[i].alarmlof));
         arr_rem.push(parseInt(stats[i].alarmrem));
@@ -300,7 +302,7 @@ function dataSummary(stats){
   totals_obj.bes.count = totalArray(arr_bes);
   totals_obj.dm.count = totalArray(arr_dm);
   totals_obj.les.count = totalArray(arr_les);
-    totals_obj.lcv.count = totalArray(arr_lcv);
+  totals_obj.lcv.count = totalArray(arr_lcv);
   totals_obj.los.count = totalArray(arr_los);
   totals_obj.lof.count = totalArray(arr_lof);
   totals_obj.rem.count = totalArray(arr_rem);
@@ -335,6 +337,7 @@ function dataMassage(stats){
   var arr_bes = [];
   var arr_dm = [];
   var arr_les = [];
+  var arr_lcv = [];
   var steps = 0;
   // var arr_los = [];
   // var arr_lof = [];
@@ -376,6 +379,7 @@ function dataMassage(stats){
             arr_bes.push(parseInt(stats[i].bes));
             arr_dm.push(parseInt(stats[i].dm));
             arr_les.push(parseInt(stats[i].les));
+            arr_les.push(parseInt(stats[i].lcv));
             // arr_los.push(parseInt(stats[i].alarmlos));
             // arr_lof.push(parseInt(stats[i].alarmlof));
             // arr_rem.push(parseInt(stats[i].alarmrem));
@@ -540,6 +544,9 @@ function dataMassage(stats){
         }, {
             name: 'LESs',
             data: arr_les
+        }, {
+            name: 'LCVs',
+            data: arr_lcv
         }]
         // , {
         //     name: 'LOS',
@@ -555,88 +562,6 @@ function dataMassage(stats){
         //     data: arr_ais
         // }]
     });
-
-  // $('#line-chart').highcharts({
- //        chart: {
- //            type: 'area',
- //            zoomType: 'x'
- //        },
- //        title: {
- //            text: 'Error Counters'
- //        },
- //        xAxis: {
- //         categories: arr_cat,
- //            allowDecimals: false,
- //            labels: {
- //                formatter: function () {
- //                    return this.value; // clean, unformatted number for year
- //                }
- //            }
- //        },
- //        yAxis: {
- //         allowDecimals: false,
- //            title: {
- //                text: 'Errors'
- //            }
- //        },
- //        tooltip: {
- //            pointFormat: '{series.name} produced <b>{point.y:,.0f}</b> error(s)'
- //        },
- //        plotOptions: {
- //            area: {
- //                marker: {
- //                    enabled: false,
- //                    symbol: 'circle',
- //                    radius: 2,
- //                    states: {
- //                        hover: {
- //                            enabled: true
- //                        }
- //                    }
- //                }
- //            }
- //        },
- //        series: [{
- //            name: 'ESs',
- //            data: arr_es
- //        }, {
- //            name: 'UASs',
- //            data: arr_uas
- //        }, {
- //            name: 'PCVs',
- //            data: arr_pcv
- //        }, {
- //            name: 'SESs',
- //            data: arr_ses
- //        }, {
- //            name: 'SEFs',
- //            data: arr_sef
- //        }, {
- //            name: 'CSSs',
- //            data: arr_css
- //        }, {
- //            name: 'BESs',
- //            data: arr_bes
- //        }, {
- //            name: 'DMs',
- //            data: arr_dm
- //        }, {
- //            name: 'LESs',
- //            data: arr_les
- //        }, {
- //            name: 'LOS',
- //            data: arr_los
- //        }, {
- //            name: 'LOF',
- //            data: arr_lof
- //        }, {
- //            name: 'REM',
- //            data: arr_rem
- //        }, {
- //            name: 'AIS',
- //            data: arr_ais
- //        }]
- //    });
 
 }
 
