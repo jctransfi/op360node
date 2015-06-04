@@ -50,7 +50,7 @@ myApp.controller('contactController', function($scope) {
 myApp.controller('paController', function($scope, dataService, uiGridConstants) {
   var defQ = {"vhid":"CPAYOR4-CONWAY-RTR-1", "descr":"Serial0%2F1%2F0", "stdt":"2015-05-19+00:00:00", "endt":"2015-05-20+23:59:00"};
 
-  $scope.master = {vhid:"CPAYOR4-CONWAY-RTR-1", device: "Serial", desc: "0/1/0", stdt: "2015-05-19", sttm: "00:00:00", enddt: "2015-05-21", endtm: "00:00:00"};
+  $scope.master = {vhid:"CPAYOR4-CONWAY-RTR-1", desc: "Serial0/1/0", stdt: "2015-05-19", sttm: "00:00:00", enddt: "2015-05-21", endtm: "00:00:00"};
   $scope.cpe = angular.copy($scope.master);
 
   $scope.promise = null;
@@ -100,7 +100,7 @@ myApp.controller('paController', function($scope, dataService, uiGridConstants) 
       // console.log("beep")
         var descRaw = $scope.cpe.desc;
         var descSerial = descRaw.replace(/\//g, "%2F");
-      var updateQ = {"vhid": $scope.cpe.vhid, "descr":  $scope.cpe.device + "" + descSerial,
+      var updateQ = {"vhid": $scope.cpe.vhid, "descr": descSerial,
       "stdt":  $scope.cpe.stdt + "+" + $scope.cpe.sttm, "endt":  $scope.cpe.enddt + "+" + $scope.cpe.endtm }
 
       console.log(updateQ);
