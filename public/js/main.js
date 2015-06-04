@@ -48,9 +48,9 @@ myApp.controller('contactController', function($scope) {
 });
 
 myApp.controller('paController', function($scope, dataService, uiGridConstants) {
-  var defQ = {"vhid":"CABRCV1-CROCS-RTR-1", "descr":"Serial0%2F0%2F0", "stdt":"2015-01-01+00:00:00", "endt":"2015-01-01+23:59:00"};
+  var defQ = {"vhid":"CPAYOR4-CONWAY-RTR-1", "descr":"Serial0%2F1%2F0", "stdt":"2015-05-19+00:00:00", "endt":"2015-05-20+23:59:00"};
 
-  $scope.master = {vhid:"CABRCV1-CROCS-RTR-1", device: "Serial", desc: "0/0/0", stdt: "2015-01-01", sttm: "00:00:00", enddt: "2015-01-01", endtm: "01:00:00"};
+  $scope.master = {vhid:"CPAYOR4-CONWAY-RTR-1", device: "Serial", desc: "0/1/0", stdt: "2015-05-19", sttm: "00:00:00", enddt: "2015-05-21", endtm: "00:00:00"};
   $scope.cpe = angular.copy($scope.master);
 
   $scope.promise = null;
