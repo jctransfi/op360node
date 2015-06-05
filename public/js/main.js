@@ -73,7 +73,7 @@ myApp.controller('paController', function($scope, dataService, uiGridConstants) 
       {displayName:'DMs', field: 'dm', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
       {displayName:'LESs', field: 'les', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
       {displayName:'LCV', field: 'lcv', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true}
-    ] 
+    ]
 
     $scope.gridOptions = {
       enableGridMenu: true,
@@ -100,7 +100,9 @@ myApp.controller('paController', function($scope, dataService, uiGridConstants) 
       // console.log("beep")
         var descRaw = $scope.cpe.desc;
         var descSerial = descRaw.replace(/\//g, "%2F");
-      var updateQ = {"vhid": $scope.cpe.vhid, "descr": descSerial,
+        var descSerial2 = descSerial.replace(" ", "+");
+        console.log("serialized - " + descSerial2)
+      var updateQ = {"vhid": $scope.cpe.vhid, "descr": descSerial2,
       "stdt":  $scope.cpe.stdt + "+" + $scope.cpe.sttm, "endt":  $scope.cpe.enddt + "+" + $scope.cpe.endtm }
 
       console.log(updateQ);
