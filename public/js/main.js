@@ -62,17 +62,17 @@ myApp.controller('paController', function($scope, dataService, uiGridConstants) 
     $scope.totals = {};
 
     var columnOpts = [
-      {displayName:'Interval End Date/Time', field: 'enddt', width: '20%', sort: { direction: uiGridConstants.DESC }},
-      {displayName:'ESs', field: 'es', type:'number', aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
-      {displayName:'UASs', field: 'uas', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
-      {displayName:'PCVs', field: 'pcv', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
-      {displayName:'SESs', field: 'ses', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
-      {displayName:'SEFs', field: 'sef', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
-      {displayName:'CSSs', field: 'css', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
-      {displayName:'BESs', field: 'bes', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
-      {displayName:'DMs', field: 'dm', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
-      {displayName:'LESs', field: 'les', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
-      {displayName:'LCV', field: 'lcv', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true}
+      {displayName:'Interval End Date/Time', field: 'intvl_end_datetime', width: '20%', sort: { direction: uiGridConstants.DESC }},
+      {displayName:'ESs', field: 'intvl_es', type:'number', aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
+      {displayName:'UASs', field: 'intvl_uas', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
+      {displayName:'PCVs', field: 'intvl_pcv', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
+      {displayName:'SESs', field: 'intvl_ses', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
+      {displayName:'SEFs', field: 'intvl_sef', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
+      {displayName:'CSSs', field: 'intvl_css', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
+      {displayName:'BESs', field: 'intvl_bes', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
+      {displayName:'DMs', field: 'intvl_dm', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
+      {displayName:'LESs', field: 'intvl_les', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true},
+      {displayName:'LCV', field: 'intvl_lcv', type:'number',aggregationType: uiGridConstants.aggregationTypes.sum, aggregationHideLabel: true}
     ]
 
     $scope.gridOptions = {
@@ -109,12 +109,12 @@ myApp.controller('paController', function($scope, dataService, uiGridConstants) 
 
       $scope.promise = dataService.getData(updateQ).then(function(dataResponse) {
         console.log(dataResponse);
-        if(dataResponse.data._embedded){
-          $scope.stats = dataResponse.data._embedded.stats;
-            $scope.gridOptions.data = dataResponse.data._embedded.stats;
-            console.log(dataResponse.data._embedded.stats);
-            dataMassage(dataResponse.data._embedded.stats);
-            $scope.totals = dataSummary(dataResponse.data._embedded.stats);
+        if(dataResponse.data){
+          $scope.stats = dataResponse.data;
+            $scope.gridOptions.data = dataResponse.data;
+            console.log(dataResponse.data);
+            dataMassage(dataResponse.data);
+            $scope.totals = dataSummary(dataResponse.data);
         }else{
           console.log("NO DATA"); 
           //$scope.gridOptions = {};
@@ -222,77 +222,77 @@ function dataSummary(stats){
     }
 
   for(i=0; i != stats.length; i++){
-    // console.log(stats[i].enddt)
-    if(parseInt(stats[i].es) !== 0){
-      totals_obj.es.instances.push(stats[i].enddt)
+    // console.log(stats[i].intvl_end_datetime)
+    if(parseInt(stats[i].intvl_es) !== 0){
+      totals_obj.es.instances.push(stats[i].intvl_end_datetime)
     }
 
-    if(parseInt(stats[i].uas) !== 0){
-      totals_obj.uas.instances.push(stats[i].enddt)
+    if(parseInt(stats[i].intvl_uas) !== 0){
+      totals_obj.uas.instances.push(stats[i].intvl_end_datetime)
     }
 
-    if(parseInt(stats[i].pcv) !== 0){
-      totals_obj.pcv.instances.push(stats[i].enddt)
+    if(parseInt(stats[i].intvl_pcv) !== 0){
+      totals_obj.pcv.instances.push(stats[i].intvl_end_datetime)
     }
 
-    if(parseInt(stats[i].ses) !== 0){
-      totals_obj.ses.instances.push(stats[i].enddt)
+    if(parseInt(stats[i].intvl_ses) !== 0){
+      totals_obj.ses.instances.push(stats[i].intvl_end_datetime)
     }
 
-    if(parseInt(stats[i].sef) !== 0){
-      totals_obj.sef.instances.push(stats[i].enddt)
+    if(parseInt(stats[i].intvl_sef) !== 0){
+      totals_obj.sef.instances.push(stats[i].intvl_end_datetime)
     }
 
-    if(parseInt(stats[i].css) !== 0){
-      totals_obj.css.instances.push(stats[i].enddt)
+    if(parseInt(stats[i].intvl_css) !== 0){
+      totals_obj.css.instances.push(stats[i].intvl_end_datetime)
     }
 
-    if(parseInt(stats[i].bes) !== 0){
-      totals_obj.bes.instances.push(stats[i].enddt)
+    if(parseInt(stats[i].intvl_bes) !== 0){
+      totals_obj.bes.instances.push(stats[i].intvl_end_datetime)
     }
 
-    if(parseInt(stats[i].dm) !== 0){
-      totals_obj.dm.instances.push(stats[i].enddt)
+    if(parseInt(stats[i].intvl_dm) !== 0){
+      totals_obj.dm.instances.push(stats[i].intvl_end_datetime)
     }
 
-    if(parseInt(stats[i].les) !== 0){
-      totals_obj.les.instances.push(stats[i].enddt)
+    if(parseInt(stats[i].intvl_les) !== 0){
+      totals_obj.les.instances.push(stats[i].intvl_end_datetime)
     }
 
-    if(parseInt(stats[i].lcv) !== 0){
+    if(parseInt(stats[i].intvl_lcv) !== 0){
       totals_obj.lcv.instances.push(stats[i].endt)
     }
 
-    if(parseInt(stats[i].alarmlos) !== 0){
-      totals_obj.los.instances.push(stats[i].enddt)
+    if(parseInt(stats[i].alarm_los) !== 0){
+      totals_obj.los.instances.push(stats[i].intvl_end_datetime)
     }
 
-    if(parseInt(stats[i].alarmlof) !== 0){
-      totals_obj.lof.instances.push(stats[i].enddt)
+    if(parseInt(stats[i].alarm_lof) !== 0){
+      totals_obj.lof.instances.push(stats[i].intvl_end_datetime)
     }
 
-    if(parseInt(stats[i].alarmrem) !== 0){
-      totals_obj.rem.instances.push(stats[i].enddt)
+    if(parseInt(stats[i].alarm_rem) !== 0){
+      totals_obj.rem.instances.push(stats[i].intvl_end_datetime)
     }
 
-    if(parseInt(stats[i].alarmais) !== 0){
-      totals_obj.ais.instances.push(stats[i].enddt)
+    if(parseInt(stats[i].alarm_ais) !== 0){
+      totals_obj.ais.instances.push(stats[i].intvl_end_datetime)
     }
 
-    arr_es.push(parseInt(stats[i].es));
-    arr_uas.push(parseInt(stats[i].uas));
-    arr_pcv.push(parseInt(stats[i].pcv));
-    arr_ses.push(parseInt(stats[i].ses));
-    arr_sef.push(parseInt(stats[i].sef));
-    arr_css.push(parseInt(stats[i].css));
-    arr_bes.push(parseInt(stats[i].bes));
-    arr_dm.push(parseInt(stats[i].dm));
-    arr_les.push(parseInt(stats[i].les));
-    arr_lcv.push(parseInt(stats[i].lcv));
-    arr_los.push(parseInt(stats[i].alarmlos));
-    arr_lof.push(parseInt(stats[i].alarmlof));
-    arr_rem.push(parseInt(stats[i].alarmrem));
-    arr_ais.push(parseInt(stats[i].alarmais));
+    arr_es.push(parseInt(stats[i].intvl_es));
+    arr_uas.push(parseInt(stats[i].intvl_uas));
+    arr_pcv.push(parseInt(stats[i].intvl_pcv));
+    arr_ses.push(parseInt(stats[i].intvl_ses));
+    arr_sef.push(parseInt(stats[i].intvl_sef));
+    arr_css.push(parseInt(stats[i].intvl_css));
+    arr_bes.push(parseInt(stats[i].intvl_bes));
+    arr_dm.push(parseInt(stats[i].intvl_dm));
+    arr_les.push(parseInt(stats[i].intvl_les));
+    arr_lcv.push(parseInt(stats[i].intvl_lcv));
+    arr_los.push(parseInt(stats[i].alarm_los));
+    arr_lof.push(parseInt(stats[i].alarm_lof));
+    arr_rem.push(parseInt(stats[i].alarm_rem));
+    arr_ais.push(parseInt(stats[i].alarm_ais));
   }
 
   totals_obj.es.count = totalArray(arr_es);
@@ -371,17 +371,17 @@ function dataMassage(stats){
   try{
     console.log(stats.length);
     for(i=0; i != stats.length; i++){
-      arr_cat.push(stats[i].enddt);
-      arr_es.push(parseInt(stats[i].es));
-      arr_uas.push(parseInt(stats[i].uas));
-      arr_pcv.push(parseInt(stats[i].pcv));
-      arr_ses.push(parseInt(stats[i].ses));
-      arr_sef.push(parseInt(stats[i].sef));
-      arr_css.push(parseInt(stats[i].css));
-      arr_bes.push(parseInt(stats[i].bes));
-      arr_dm.push(parseInt(stats[i].dm));
-      arr_les.push(parseInt(stats[i].les));
-      arr_lcv.push(parseInt(stats[i].lcv));
+      arr_cat.push(stats[i].intvl_end_datetime);
+      arr_es.push(parseInt(stats[i].intvl_es));
+      arr_uas.push(parseInt(stats[i].intvl_uas));
+      arr_pcv.push(parseInt(stats[i].intvl_pcv));
+      arr_ses.push(parseInt(stats[i].intvl_ses));
+      arr_sef.push(parseInt(stats[i].intvl_sef));
+      arr_css.push(parseInt(stats[i].intvl_css));
+      arr_bes.push(parseInt(stats[i].intvl_bes));
+      arr_dm.push(parseInt(stats[i].intvl_dm));
+      arr_les.push(parseInt(stats[i].intvl_les));
+      arr_lcv.push(parseInt(stats[i].intvl_lcv));
       // arr_los.push(parseInt(stats[i].alarmlos));
       // arr_lof.push(parseInt(stats[i].alarmlof));
       // arr_rem.push(parseInt(stats[i].alarmrem));
@@ -398,6 +398,7 @@ function dataMassage(stats){
     chart: {
       height: 280,
       zoomType: 'x',
+      // panning: true,
       spacingLeft: 2,
       events: {
         selection: function (event) {

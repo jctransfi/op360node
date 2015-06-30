@@ -28,8 +28,8 @@
 var express = require('express');
 var app = express();
 
-// var port = process.env.PORT || 8090; // dev port
-var port = process.env.PORT || 80; // set our port
+var port = process.env.PORT || 8090; // dev port
+// var port = process.env.PORT || 80; // set our port
 
 // create our router
 var router = express.Router();
@@ -59,13 +59,13 @@ router.route('/bears/:descr/:endt/:stdt/:vhid')
     var stdt = req.params.stdt;
     var vhid = req.params.vhid;
 
-    var urlpath = '/stats/search/findByVhidAndDescrAndEnddtBetween?descr='+descr+'&endt='+endt+'&stdt='+stdt+'&vhid='+vhid;
+    var urlpath = '/OP360REST/rest/tdmCpe?ifDescr='+descr+'&endt='+endt+'&stdt='+stdt+'&vhid='+vhid;
 
     //The url we want is: 'www.random.org/integers/?num=1&min=1&max=10&col=1&base=10&format=plain&rnd=new'
     var options = {
-      host: 'dcoeng1-paevdev-1.tnc.virtela.cc',
+      host: '172.16.69.144',
       path: urlpath,
-      port: 8092,
+      port: 8093,
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
