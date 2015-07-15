@@ -59,13 +59,13 @@ router.route('/bears/:descr/:endt/:stdt/:vhid')
     var stdt = req.params.stdt;
     var vhid = req.params.vhid;
 
-    var urlpath = '/OP360REST/rest/tdmCpe?ifDescr='+descr+'&endt='+endt+'&stdt='+stdt+'&vhid='+vhid;
+    var urlpath = '/stats/search/findByVhidAndDescrAndEnddtBetween?descr='+descr+'&endt='+endt+'&stdt='+stdt+'&vhid='+vhid;
 
     //The url we want is: 'www.random.org/integers/?num=1&min=1&max=10&col=1&base=10&format=plain&rnd=new'
     var options = {
-      host: '172.16.69.144',
+      host: 'dcoeng1-paevdev-1.tnc.virtela.cc',
       path: urlpath,
-      port: 8093,
+      port: 8092,
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
